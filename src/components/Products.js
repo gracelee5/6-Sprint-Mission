@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router";
 import "../products.css";
 import heart from "../images/heart.svg";
 import search from "../images/search.svg";
@@ -13,6 +14,9 @@ function Products() {
   const [isOpen, setIsOpen] = useState(false);
   const page = 1;
   const pageSize = 10;
+
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
@@ -78,7 +82,9 @@ function Products() {
             />
             <input type="text" placeholder="검색할 상품을 입력해주세요" />
           </Search>
-          <ProductRegister>상품 등록하기</ProductRegister>
+          <ProductRegister onClick={() => navigate("/additem")}>
+            상품 등록하기
+          </ProductRegister>
           <CustomSelect>
             <SelectButton onClick={() => setIsOpen(!isOpen)}>
               <div id="order">{order === "recent" ? "최신순" : "좋아요순"}</div>

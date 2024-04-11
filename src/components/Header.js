@@ -1,15 +1,21 @@
 import styled from "styled-components";
 import React from "react";
 import Logo from "../images/logo.svg";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 function Header() {
   const navigate = useNavigate();
+  const location = useLocation();
   return (
     <HeaderContainer>
       <MenuContainer>
         <img src={Logo} alt="판다마켓 로고" width={"153px"} />
         <FreeBoard>자유게시판</FreeBoard>
-        <UsedMarket onClick={() => navigate("/items")}>중고마켓</UsedMarket>
+        <UsedMarket
+          active={location.pathname === "/items"}
+          onClick={() => navigate("/items")}
+        >
+          중고마켓
+        </UsedMarket>
       </MenuContainer>
       <Login>로그인</Login>
     </HeaderContainer>
