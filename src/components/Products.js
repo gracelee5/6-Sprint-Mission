@@ -10,7 +10,6 @@ function Products() {
   const [products, setProducts] = useState([]);
   const [bestProducts, setBestProducts] = useState([]);
   const [order, setOrder] = useState("recent");
-  const [sortedItems, setSortedItems] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
   const page = 1;
   const pageSize = 10;
@@ -33,7 +32,7 @@ function Products() {
           setProducts(data.list.slice(0, 10));
           setBestProducts(data.list.slice(0, 4));
           const sorted = data.list.sort((a, b) => b[order] - a[order]);
-          setSortedItems(sorted);
+          setProducts(sorted);
         } else {
           console.error("");
         }
@@ -102,8 +101,8 @@ function Products() {
         </Tools>
       </div>
       <ProductContainer>
-        {sortedItems &&
-          sortedItems.map((product) => (
+        {products &&
+          products.map((product) => (
             <ProductItem key={product.id}>
               <ProductImage src={product.images} alt={product.name} />
               <ProductName>{product.name}</ProductName>
