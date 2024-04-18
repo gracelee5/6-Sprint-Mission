@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import X from "../images/ic_X.svg";
-import { relative } from "path";
+import plus from "../images/ic_plus.svg";
 function FileInput({ name, value, initialPreview, onChange }) {
   const [preview, setPreview] = useState(initialPreview);
   const inputRef = useRef();
@@ -18,7 +18,9 @@ function FileInput({ name, value, initialPreview, onChange }) {
     inputNode.value = "";
     onChange(name, null);
   };
-
+  const handleButtonClick = () => {
+    inputRef.current.click(); // 버튼 클릭 시 input 엘리먼트 클릭
+  };
   useEffect(() => {
     if (!value) return;
     const nextPreview = URL.createObjectURL(value);
@@ -32,12 +34,16 @@ function FileInput({ name, value, initialPreview, onChange }) {
 
   return (
     <Container>
-      <ImageRegister
-        type="file"
-        accept="image/png, image/jpeg"
-        onChange={handleChange}
-        ref={inputRef}
-      />
+      <InputWrapper onClick={handleButtonClick}>
+        <ImageRegister
+          type="file"
+          accept="image/png, image/jpeg"
+          onChange={handleChange}
+          ref={inputRef}
+        />
+        <Plus src={plus} />
+        <InputText>이미지 등록</InputText>
+      </InputWrapper>
       <Container>
         {value && <Image src={preview} alt="이미지 등록"></Image>}
         {value && <Delete onClick={handleClearClick} src={X}></Delete>}
@@ -56,7 +62,11 @@ const Container = styled.div`
 const ImageRegister = styled.input`
   width: 282px;
   height: 282px;
+  background-color: #f3f4f6;
+  cursor: pointer;
+  opacity: 0;
 `;
+
 const Image = styled.img`
   box-sizing: border-box;
   width: 282px;
@@ -68,4 +78,30 @@ const Delete = styled.img`
   position: absolute;
   top: 10px;
   right: 10px;
+`;
+const InputText = styled.p`
+  position: absolute;
+  margin: -110px 102px;
+  z-index: 1;
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #9ca3af;
+  width: 100px;
+`;
+const Plus = styled.img`
+  position: absolute;
+  margin: -180px 115px;
+  z-index: 1;
+`;
+const InputWrapper = styled.div`
+  position: relative;
+  width: 282px;
+  height: 282px;
+  margin: 10px 0;
+  background: #f3f4f6;
+  border-radius: 12px;
+  border: none;
 `;

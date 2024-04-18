@@ -57,8 +57,7 @@ function AddItem() {
 export default AddItem;
 const Section = styled.div`
   width: 1200px;
-  margin-left: 360px;
-  margin-top: 30px;
+  margin: 30px auto 0 auto;
 `;
 const TopSection = styled.div`
   display: flex;
