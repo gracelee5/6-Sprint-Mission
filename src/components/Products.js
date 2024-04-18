@@ -6,6 +6,8 @@ import "../products.css";
 import heart from "../images/heart.svg";
 import search from "../images/search.svg";
 import arrowDown from "../images/arrow_down.svg";
+import Header from "./Header";
+
 function Products() {
   const [products, setProducts] = useState([]);
   const [bestProducts, setBestProducts] = useState([]);
@@ -48,73 +50,78 @@ function Products() {
     setIsOpen(false); // Close dropdown after selecting an option
   };
   return (
-    <Container>
-      <BestSectionTitle>베스트 상품</BestSectionTitle>
-      <BestProductContainer>
-        {bestProducts &&
-          bestProducts.map((product) => (
-            <BestProductItem key={product.id}>
-              <BestProductImage src={product.images} alt={product.name} />
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>{product.price}원</ProductPrice>
-              <ProductLikes>
-                <Heart src={heart}></Heart>
-                {product.favoriteCount}
-              </ProductLikes>
-            </BestProductItem>
-          ))}
-      </BestProductContainer>
-      <div style={{ display: "flex", margin: "20px 0" }}>
-        <SectionTitle>전체 상품</SectionTitle>
-        <Tools>
-          <Search>
-            <img
-              src={search}
-              alt="검색"
-              style={{
-                position: "relative",
-                top: "10px",
-                left: "40px",
-                width: "24px",
-                height: "24px",
-              }}
-            />
-            <input type="text" placeholder="검색할 상품을 입력해주세요" />
-          </Search>
-          <ProductRegister onClick={() => navigate("/additem")}>
-            상품 등록하기
-          </ProductRegister>
-          <CustomSelect>
-            <SelectButton onClick={() => setIsOpen(!isOpen)}>
-              <div id="order">{order === "recent" ? "최신순" : "좋아요순"}</div>
-              <img id="arrow" src={arrowDown} alt="드롭다운 화살표" />
-            </SelectButton>
-            <OptionsContainer isOpen={isOpen}>
-              <Option onClick={() => handleOrderChange("recent")}>
-                최신순
-              </Option>
-              <Option onClick={() => handleOrderChange("favorite")}>
-                좋아요순
-              </Option>
-            </OptionsContainer>
-          </CustomSelect>
-        </Tools>
-      </div>
-      <ProductContainer>
-        {products &&
-          products.map((product) => (
-            <ProductItem key={product.id}>
-              <ProductImage src={product.images} alt={product.name} />
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>{product.price}원</ProductPrice>
-              <ProductLikes>
-                <Heart src={heart}></Heart>
-                {product.favoriteCount}
-              </ProductLikes>
-            </ProductItem>
-          ))}
-      </ProductContainer>
-    </Container>
+    <>
+      <Header />
+      <Container>
+        <BestSectionTitle>베스트 상품</BestSectionTitle>
+        <BestProductContainer>
+          {bestProducts &&
+            bestProducts.map((product) => (
+              <BestProductItem key={product.id}>
+                <BestProductImage src={product.images} alt={product.name} />
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}원</ProductPrice>
+                <ProductLikes>
+                  <Heart src={heart}></Heart>
+                  {product.favoriteCount}
+                </ProductLikes>
+              </BestProductItem>
+            ))}
+        </BestProductContainer>
+        <div style={{ display: "flex", margin: "20px 0" }}>
+          <SectionTitle>전체 상품</SectionTitle>
+          <Tools>
+            <Search>
+              <img
+                src={search}
+                alt="검색"
+                style={{
+                  position: "relative",
+                  top: "10px",
+                  left: "40px",
+                  width: "24px",
+                  height: "24px",
+                }}
+              />
+              <input type="text" placeholder="검색할 상품을 입력해주세요" />
+            </Search>
+            <ProductRegister onClick={() => navigate("/additem")}>
+              상품 등록하기
+            </ProductRegister>
+            <CustomSelect>
+              <SelectButton onClick={() => setIsOpen(!isOpen)}>
+                <div id="order">
+                  {order === "recent" ? "최신순" : "좋아요순"}
+                </div>
+                <img id="arrow" src={arrowDown} alt="드롭다운 화살표" />
+              </SelectButton>
+              <OptionsContainer isOpen={isOpen}>
+                <Option onClick={() => handleOrderChange("recent")}>
+                  최신순
+                </Option>
+                <Option onClick={() => handleOrderChange("favorite")}>
+                  좋아요순
+                </Option>
+              </OptionsContainer>
+            </CustomSelect>
+          </Tools>
+        </div>
+        <ProductContainer>
+          {products &&
+            products.map((product) => (
+              <ProductItem key={product.id}>
+                <ProductImage src={product.images} alt={product.name} />
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}원</ProductPrice>
+                <ProductLikes>
+                  <Heart src={heart}></Heart>
+                  {product.favoriteCount}
+                </ProductLikes>
+              </ProductItem>
+            ))}
+        </ProductContainer>
+      </Container>
+    </>
   );
 }
 
@@ -217,6 +224,7 @@ const ProductRegister = styled.a`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  cursor: pointer;
 `;
 
 const CustomSelect = styled.div`
