@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import FileInput from "./FileInput";
@@ -25,20 +25,19 @@ function AddItem() {
     handleChange(name, value);
   };
 
-  const validateInputs = () => {
+  const validateInputs = useCallback(() => {
     const isValid =
       values.title.trim() !== "" &&
       values.content.trim() !== "" &&
-      values.imgFile !== null &&
       values.price.trim() !== "" &&
       values.tag.trim() !== "";
 
     setIsValid(isValid);
-  };
+  }, [values]);
 
   useEffect(() => {
     validateInputs();
-  }, [values]);
+  }, [values, validateInputs]);
 
   const handleSubmit = () => {
     console.log("submit");
