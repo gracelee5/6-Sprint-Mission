@@ -102,7 +102,6 @@ const Section = styled.div`
   @media (max-width: 1199px) {
     width: 100%;
     padding: 0 24px;
-    background: red;
   }
 `;
 const TopSection = styled.div`

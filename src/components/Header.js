@@ -8,7 +8,12 @@ function Header() {
   return (
     <HeaderContainer>
       <MenuContainer>
-        <img src={Logo} alt="판다마켓 로고" width={"153px"} />
+        <img
+          src={Logo}
+          alt="판다마켓 로고"
+          width={"153px"}
+          onClick={() => navigate("/")}
+        />
         <FreeBoard>자유게시판</FreeBoard>
         <UsedMarket
           active={location.pathname === "/items"}
