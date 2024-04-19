@@ -107,11 +107,11 @@ const InputText = styled.p`
 `;
 const Plus = styled.img`
   position: absolute;
-  margin: -180px 115px;
+  margin: 100px -170px;
   z-index: 1;
   @media (max-width: 1199px) {
 \
-    margin: -115px 55px;
+    margin: 50px -105px;
   }
 `;
 const InputWrapper = styled.div`
