@@ -147,7 +147,7 @@ const Text = styled.p`
   display: flex;
   align-items: center;
   color: #1f2937;
-  margin-top: 20px;
+  margin: 20px 0;
 `;
 
 const ProductName = styled.input`
@@ -156,6 +156,7 @@ const ProductName = styled.input`
   background: #f3f4f6;
   border-radius: 12px;
   padding: 0px 25px;
+  border: none;
   &::placeholder {
     font-family: "Pretendard";
     font-style: normal;
@@ -173,6 +174,7 @@ const ProductInfo = styled.input`
   border-radius: 12px;
   padding: 0px 25px;
   position: relative;
+  border: none;
   &::placeholder {
     font-family: "Pretendard";
     font-style: normal;
@@ -191,6 +193,7 @@ const Price = styled.input`
   background: #f3f4f6;
   border-radius: 12px;
   padding: 0px 25px;
+  border: none;
   &::placeholder {
     font-family: "Pretendard";
     font-style: normal;
@@ -207,6 +210,7 @@ const Tag = styled.input`
   background: #f3f4f6;
   border-radius: 12px;
   padding: 0px 25px;
+  border: none;
   &::placeholder {
     font-family: "Pretendard";
     font-style: normal;

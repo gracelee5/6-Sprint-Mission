@@ -2,6 +2,7 @@ import styled from "styled-components";
 import React from "react";
 import Logo from "../images/logo.svg";
 import { useNavigate, useLocation } from "react-router";
+
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -14,13 +15,15 @@ function Header() {
           width={"153px"}
           onClick={() => navigate("/")}
         />
-        <FreeBoard>자유게시판</FreeBoard>
-        <UsedMarket
-          active={location.pathname === "/items"}
-          onClick={() => navigate("/items")}
-        >
-          중고마켓
-        </UsedMarket>
+        <nav style={{ display: "flex", gap: "20px" }}>
+          <FreeBoard>자유게시판</FreeBoard>
+          <UsedMarket
+            active={location.pathname === "/items"}
+            onClick={() => navigate("/items")}
+          >
+            중고마켓
+          </UsedMarket>
+        </nav>
       </MenuContainer>
       <Login>로그인</Login>
     </HeaderContainer>
@@ -48,7 +51,7 @@ const MenuContainer = styled.div`
     margin-left: 24px;
   }
 `;
-const FreeBoard = styled.p`
+const FreeBoard = styled.a`
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
@@ -59,7 +62,7 @@ const FreeBoard = styled.p`
   text-align: center;
   color: #4b5563;
 `;
-const UsedMarket = styled.p`
+const UsedMarket = styled.a`
   font-family: "Pretendard";
   font-style: normal;
   font-weight: 700;
