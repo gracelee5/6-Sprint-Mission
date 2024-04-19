@@ -1,14 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import FileInput from "./FileInput";
 function AddItem() {
   const [values, setValues] = useState({
     title: "",
-    rating: 0,
     content: "",
     imgFile: null,
+    price: "",
+    tag: "",
   });
+
+  const [isValid, setIsValid] = useState(false);
 
   const handleChange = (name, value) => {
     setValues((prevValues) => ({
@@ -22,13 +25,33 @@ function AddItem() {
     handleChange(name, value);
   };
 
+  const validateInputs = () => {
+    const isValid =
+      values.title.trim() !== "" &&
+      values.content.trim() !== "" &&
+      values.imgFile !== null &&
+      values.price.trim() !== "" &&
+      values.tag.trim() !== "";
+
+    setIsValid(isValid);
+  };
+
+  useEffect(() => {
+    validateInputs();
+  }, [values]);
+
+  const handleSubmit = () => {
+    console.log("submit");
+  };
   return (
     <>
       <Header />
       <Section>
         <TopSection>
           <RegisterText>상품 등록하기</RegisterText>
-          <RegisterButton>등록</RegisterButton>
+          <RegisterButton onClick={handleSubmit} disabled={!isValid}>
+            등록
+          </RegisterButton>
         </TopSection>
         <Text>상품 이미지</Text>
         <FileInput
@@ -39,22 +62,41 @@ function AddItem() {
         <Text>상품명</Text>
         <ProductName
           type="text"
+          name="title"
+          value={values.title}
+          onChange={handleInputChange}
           placeholder="상품명을 입력해주세요."
         ></ProductName>
         <Text>상품 소개</Text>
         <ProductInfo
           type="text"
+          name="content"
+          value={values.content}
+          onChange={handleInputChange}
           placeholder="상품 소개를 입력해주세요."
         ></ProductInfo>
         <Text>판매 가격</Text>
-        <Price type="number" placeholder="판매 가격을 입력해주세요."></Price>
+        <Price
+          type="number"
+          name="price"
+          value={values.price}
+          onChange={handleInputChange}
+          placeholder="판매 가격을 입력해주세요."
+        ></Price>
         <Text>태그</Text>
-        <Tag type="text" placeholder="태그를 입력해주세요."></Tag>
+        <Tag
+          type="text"
+          name="tag"
+          value={values.tag}
+          onChange={handleInputChange}
+          placeholder="태그를 입력해주세요."
+        ></Tag>
       </Section>
     </>
   );
 }
 export default AddItem;
+
 const Section = styled.div`
   width: 1200px;
   margin: 30px auto 0 auto;
@@ -82,7 +124,7 @@ const RegisterButton = styled.button`
   gap: 10px;
   width: 88px;
   height: 42px;
-  background: #9ca3af;
+  background-color: ${(props) => (props.disabled ? "#9ca3af" : "#3692ff")};
   border-radius: 8px;
   border: none;
   font-family: "Pretendard";
