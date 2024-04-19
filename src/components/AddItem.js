@@ -99,7 +99,12 @@ export default AddItem;
 
 const Section = styled.div`
   width: 1200px;
-  margin: 30px auto 0 auto;
+  margin: 30px auto;
+  @media (max-width: 1199px) {
+    width: 100%;
+    padding: 0 24px;
+    background: red;
+  }
 `;
 const TopSection = styled.div`
   display: flex;

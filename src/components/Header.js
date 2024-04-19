@@ -32,12 +32,16 @@ const HeaderContainer = styled.div`
   background: #ffffff;
   border-bottom: 1px solid #dfdfdf;
   align-items: center;
+  z-index: 2;
 `;
 const MenuContainer = styled.div`
   margin-left: 200px;
   display: flex;
   gap: 30px;
   align-items: center;
+  @media (max-width: 1199px) {
+    margin-left: 24px;
+  }
 `;
 const FreeBoard = styled.p`
   font-family: "Pretendard";
@@ -79,5 +83,8 @@ const Login = styled.a`
   display: flex;
   align-items: center;
   color: #ffffff;
+  @media (max-width: 1199px) {
+    margin: 0 24px 0 auto;
+  }
 `;
 export default Header;

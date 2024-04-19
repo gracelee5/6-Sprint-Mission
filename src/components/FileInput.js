@@ -44,10 +44,10 @@ function FileInput({ name, value, initialPreview, onChange }) {
         <Plus src={plus} />
         <InputText>이미지 등록</InputText>
       </InputWrapper>
-      <Container>
+      <Container1>
         {value && <Image src={preview} alt="이미지 등록"></Image>}
         {value && <Delete onClick={handleClearClick} src={X}></Delete>}
-      </Container>
+      </Container1>
     </Container>
   );
 }
@@ -56,8 +56,11 @@ export default FileInput;
 
 const Container = styled.div`
   display: flex;
-  position: relative;
   gap: 20px;
+`;
+const Container1 = styled.div`
+  display: flex;
+  position: relative;
 `;
 const ImageRegister = styled.input`
   width: 282px;
@@ -65,6 +68,10 @@ const ImageRegister = styled.input`
   background-color: #f3f4f6;
   cursor: pointer;
   opacity: 0;
+  @media (max-width: 1199px) {
+    width: 162px;
+    height: 162px;
+  }
 `;
 
 const Image = styled.img`
@@ -73,6 +80,10 @@ const Image = styled.img`
   height: 282px;
   border: none;
   border-radius: 12px;
+  @media (max-width: 1199px) {
+    width: 162px;
+    height: 162px;
+  }
 `;
 const Delete = styled.img`
   position: absolute;
@@ -90,11 +101,18 @@ const InputText = styled.p`
   line-height: 24px;
   color: #9ca3af;
   width: 100px;
+  @media (max-width: 1199px) {
+    margin: -60px 45px;
+  }
 `;
 const Plus = styled.img`
   position: absolute;
   margin: -180px 115px;
   z-index: 1;
+  @media (max-width: 1199px) {
+\
+    margin: -115px 55px;
+  }
 `;
 const InputWrapper = styled.div`
   position: relative;
@@ -104,4 +122,8 @@ const InputWrapper = styled.div`
   background: #f3f4f6;
   border-radius: 12px;
   border: none;
+  @media (max-width: 1199px) {
+    width: 162px;
+    height: 162px;
+  }
 `;
