@@ -11,6 +11,7 @@ import Header from "./Header";
 function Products() {
   const [products, setProducts] = useState([0]);
   const [bestProducts, setBestProducts] = useState([0]);
+
   const [order, setOrder] = useState("recent");
   const [isOpen, setIsOpen] = useState(false);
   const page = 1;
@@ -37,6 +38,7 @@ function Products() {
           setProducts(sorted);
         } else {
           alert("에러가 발생했습니다.");
+
         }
       } catch (error) {
         console.error(error);
@@ -50,6 +52,7 @@ function Products() {
     setIsOpen(false); // Close dropdown after selecting an option
   };
   return (
+
     <>
       <Header />
       <Container>
@@ -226,6 +229,7 @@ const ProductRegister = styled.a`
   line-height: 19px;
   color: #ffffff;
   cursor: pointer;
+
 `;
 
 const CustomSelect = styled.div`

@@ -24,6 +24,7 @@ function Header() {
             중고마켓
           </UsedMarket>
         </nav>
+
       </MenuContainer>
       <Login>로그인</Login>
     </HeaderContainer>
@@ -41,6 +42,7 @@ const HeaderContainer = styled.div`
   border-bottom: 1px solid #dfdfdf;
   align-items: center;
   z-index: 2;
+
 `;
 const MenuContainer = styled.div`
   margin-left: 200px;
