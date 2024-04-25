@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
-import Header from "./Header";
-import FileInput from "./FileInput";
+import Header from "../components/Header";
+import FileInput from "../components/FileInput";
 import { createGlobalStyle } from "styled-components";
 const GlobalStyle = createGlobalStyle`
   * {

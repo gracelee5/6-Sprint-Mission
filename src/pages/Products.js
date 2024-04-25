@@ -6,7 +6,7 @@ import "../products.css";
 import heart from "../images/heart.svg";
 import search from "../images/search.svg";
 import arrowDown from "../images/arrow_down.svg";
-import Header from "./Header";
+import Header from "../components/Header";
 
 function Products() {
   const [products, setProducts] = useState([]);
@@ -49,6 +49,11 @@ function Products() {
     setOrder(selectedOrder);
     setIsOpen(false); // Close dropdown after selecting an option
   };
+
+  const handleProductClick = (productId) => {
+    navigate(`/items/${productId}`);
+  };
+
   return (
     <>
       <Header />
@@ -57,7 +62,10 @@ function Products() {
         <BestProductContainer>
           {bestProducts &&
             bestProducts.map((product) => (
-              <BestProductItem key={product.id}>
+              <BestProductItem
+                key={product.id}
+                onClick={() => handleProductClick(product.id)}
+              >
                 <BestProductImage src={product.images} alt={product.name} />
                 <ProductName>{product.name}</ProductName>
                 <ProductPrice>{product.price}원</ProductPrice>
@@ -110,7 +118,10 @@ function Products() {
         <ProductContainer>
           {products &&
             products.map((product) => (
-              <ProductItem key={product.id}>
+              <ProductItem
+                key={product.id}
+                onClick={() => handleProductClick(product.id)}
+              >
                 <ProductImage src={product.images} alt={product.name} />
                 <ProductName>{product.name}</ProductName>
                 <ProductPrice>{product.price}원</ProductPrice>
