@@ -6,9 +6,12 @@ import "../products.css";
 import heart from "../images/heart.svg";
 import search from "../images/search.svg";
 import arrowDown from "../images/arrow_down.svg";
+import Header from "./Header";
+
 function Products() {
-  const [products, setProducts] = useState([]);
-  const [bestProducts, setBestProducts] = useState([]);
+  const [products, setProducts] = useState([0]);
+  const [bestProducts, setBestProducts] = useState([0]);
+
   const [order, setOrder] = useState("recent");
   const [isOpen, setIsOpen] = useState(false);
   const page = 1;
@@ -34,7 +37,8 @@ function Products() {
           const sorted = data.list.sort((a, b) => b[order] - a[order]);
           setProducts(sorted);
         } else {
-          console.error("");
+          alert("에러가 발생했습니다.");
+
         }
       } catch (error) {
         console.error(error);
@@ -48,73 +52,80 @@ function Products() {
     setIsOpen(false); // Close dropdown after selecting an option
   };
   return (
-    <Container>
-      <BestSectionTitle>베스트 상품</BestSectionTitle>
-      <BestProductContainer>
-        {bestProducts &&
-          bestProducts.map((product) => (
-            <BestProductItem key={product.id}>
-              <BestProductImage src={product.images} alt={product.name} />
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>{product.price}원</ProductPrice>
-              <ProductLikes>
-                <Heart src={heart}></Heart>
-                {product.favoriteCount}
-              </ProductLikes>
-            </BestProductItem>
-          ))}
-      </BestProductContainer>
-      <div style={{ display: "flex", margin: "20px 0" }}>
-        <SectionTitle>전체 상품</SectionTitle>
-        <Tools>
-          <Search>
-            <img
-              src={search}
-              alt="검색"
-              style={{
-                position: "relative",
-                top: "10px",
-                left: "40px",
-                width: "24px",
-                height: "24px",
-              }}
-            />
-            <input type="text" placeholder="검색할 상품을 입력해주세요" />
-          </Search>
-          <ProductRegister onClick={() => navigate("/additem")}>
-            상품 등록하기
-          </ProductRegister>
-          <CustomSelect>
-            <SelectButton onClick={() => setIsOpen(!isOpen)}>
-              <div id="order">{order === "recent" ? "최신순" : "좋아요순"}</div>
-              <img id="arrow" src={arrowDown} alt="드롭다운 화살표" />
-            </SelectButton>
-            <OptionsContainer isOpen={isOpen}>
-              <Option onClick={() => handleOrderChange("recent")}>
-                최신순
-              </Option>
-              <Option onClick={() => handleOrderChange("favorite")}>
-                좋아요순
-              </Option>
-            </OptionsContainer>
-          </CustomSelect>
-        </Tools>
-      </div>
-      <ProductContainer>
-        {products &&
-          products.map((product) => (
-            <ProductItem key={product.id}>
-              <ProductImage src={product.images} alt={product.name} />
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>{product.price}원</ProductPrice>
-              <ProductLikes>
-                <Heart src={heart}></Heart>
-                {product.favoriteCount}
-              </ProductLikes>
-            </ProductItem>
-          ))}
-      </ProductContainer>
-    </Container>
+
+    <>
+      <Header />
+      <Container>
+        <BestSectionTitle>베스트 상품</BestSectionTitle>
+        <BestProductContainer>
+          {bestProducts &&
+            bestProducts.map((product) => (
+              <BestProductItem key={product.id}>
+                <BestProductImage src={product.images} alt={product.name} />
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}원</ProductPrice>
+                <ProductLikes>
+                  <Heart src={heart}></Heart>
+                  {product.favoriteCount}
+                </ProductLikes>
+              </BestProductItem>
+            ))}
+        </BestProductContainer>
+        <div style={{ display: "flex", margin: "20px 0" }}>
+          <SectionTitle>전체 상품</SectionTitle>
+          <Tools>
+            <Search>
+              <img
+                src={search}
+                alt="검색"
+                style={{
+                  position: "relative",
+                  top: "10px",
+                  left: "40px",
+                  width: "24px",
+                  height: "24px",
+                }}
+              />
+              <SearchInput
+                type="text"
+                placeholder="검색할 상품을 입력해주세요"
+              ></SearchInput>
+            </Search>
+            <ProductRegister onClick={() => navigate("/additem")}>
+              상품 등록하기
+            </ProductRegister>
+            <CustomSelect>
+              <SelectButton onClick={() => setIsOpen(!isOpen)}>
+                <Order>{order === "recent" ? "최신순" : "좋아요순"}</Order>
+                <Arrow src={arrowDown} alt="드롭다운 화살표" />
+              </SelectButton>
+              <OptionsContainer isOpen={isOpen}>
+                <Option onClick={() => handleOrderChange("recent")}>
+                  최신순
+                </Option>
+                <Option onClick={() => handleOrderChange("favorite")}>
+                  좋아요순
+                </Option>
+              </OptionsContainer>
+            </CustomSelect>
+          </Tools>
+        </div>
+        <ProductContainer>
+          {products &&
+            products.map((product) => (
+              <ProductItem key={product.id}>
+                <ProductImage src={product.images} alt={product.name} />
+                <ProductName>{product.name}</ProductName>
+                <ProductPrice>{product.price}원</ProductPrice>
+                <ProductLikes>
+                  <Heart src={heart}></Heart>
+                  {product.favoriteCount}
+                </ProductLikes>
+              </ProductItem>
+            ))}
+        </ProductContainer>
+      </Container>
+    </>
   );
 }
 
@@ -217,6 +228,8 @@ const ProductRegister = styled.a`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  cursor: pointer;
+
 `;
 
 const CustomSelect = styled.div`
@@ -278,5 +291,25 @@ const Tools = styled.div`
   display: flex;
   gap: 20px;
   margin: 0 30px 0 auto;
+`;
+const SearchInput = styled.input`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 9px 20px 9px 46px;
+  gap: 10px;
+  border: none;
+  width: 325px;
+  height: 42px;
+  background: #f3f4f6;
+  border-radius: 12px;
+`;
+const Arrow = styled.img`
+  width: 24px;
+  margin: -2px 0px 0 0px;
+`;
+const Order = styled.div`
+  margin: 0 0px 0 20px;
+  width: 60px;
 `;
 export default Products;
