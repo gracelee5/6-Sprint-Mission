@@ -2,6 +2,17 @@ import React, { useState, useEffect, useCallback } from "react";
 import styled from "styled-components";
 import Header from "./Header";
 import FileInput from "./FileInput";
+import { createGlobalStyle } from "styled-components";
+const GlobalStyle = createGlobalStyle`
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    font-family: "Pretendard";
+    font-style: normal;
+  }
+`;
 function AddItem() {
   const [values, setValues] = useState({
     title: "",
@@ -44,6 +55,7 @@ function AddItem() {
   };
   return (
     <>
+      <GlobalStyle />
       <Header />
       <Section>
         <TopSection>
@@ -109,8 +121,6 @@ const TopSection = styled.div`
   width: 100%;
 `;
 const RegisterText = styled.h1`
-  font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 28px;
   line-height: 33px;
@@ -130,8 +140,6 @@ const RegisterButton = styled.button`
   background-color: ${(props) => (props.disabled ? "#9ca3af" : "#3692ff")};
   border-radius: 8px;
   border: none;
-  font-family: "Pretendard";
-  font-style: normal;
   font-weight: 600;
   font-size: 16px;
   line-height: 19px;
@@ -139,8 +147,6 @@ const RegisterButton = styled.button`
   margin: 0 0 0 auto;
 `;
 const Text = styled.p`
-  font-family: "Pretendard";
-  font-style: normal;
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -158,8 +164,6 @@ const ProductName = styled.input`
   padding: 0px 25px;
   border: none;
   &::placeholder {
-    font-family: "Pretendard";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -176,8 +180,6 @@ const ProductInfo = styled.input`
   position: relative;
   border: none;
   &::placeholder {
-    font-family: "Pretendard";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -195,8 +197,6 @@ const Price = styled.input`
   padding: 0px 25px;
   border: none;
   &::placeholder {
-    font-family: "Pretendard";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;
@@ -212,8 +212,6 @@ const Tag = styled.input`
   padding: 0px 25px;
   border: none;
   &::placeholder {
-    font-family: "Pretendard";
-    font-style: normal;
     font-weight: 400;
     font-size: 16px;
     line-height: 24px;

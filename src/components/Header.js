@@ -1,28 +1,19 @@
 import styled from "styled-components";
 import React from "react";
 import Logo from "../images/logo.svg";
-import { useNavigate, useLocation } from "react-router";
-
+import { Link } from "react-router-dom";
 function Header() {
-  const navigate = useNavigate();
-  const location = useLocation();
   return (
     <HeaderContainer>
       <MenuContainer>
-        <img
-          src={Logo}
-          alt="판다마켓 로고"
-          width={"153px"}
-          onClick={() => navigate("/")}
-        />
+        <StyledLink to="/">
+          <img src={Logo} alt="판다마켓 로고" width={"153px"} />
+        </StyledLink>
         <nav style={{ display: "flex", gap: "20px" }}>
           <FreeBoard>자유게시판</FreeBoard>
-          <UsedMarket
-            active={location.pathname === "/items"}
-            onClick={() => navigate("/items")}
-          >
-            중고마켓
-          </UsedMarket>
+          <StyledLink to="/items">
+            <UsedMarket>중고마켓</UsedMarket>
+          </StyledLink>
         </nav>
       </MenuContainer>
       <Login>로그인</Login>
@@ -61,6 +52,9 @@ const FreeBoard = styled.a`
   align-items: center;
   text-align: center;
   color: #4b5563;
+`;
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 const UsedMarket = styled.a`
   font-family: "Pretendard";

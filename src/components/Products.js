@@ -9,8 +9,8 @@ import arrowDown from "../images/arrow_down.svg";
 import Header from "./Header";
 
 function Products() {
-  const [products, setProducts] = useState([0]);
-  const [bestProducts, setBestProducts] = useState([0]);
+  const [products, setProducts] = useState([]);
+  const [bestProducts, setBestProducts] = useState([]);
   const [order, setOrder] = useState("recent");
   const [isOpen, setIsOpen] = useState(false);
   const page = 1;

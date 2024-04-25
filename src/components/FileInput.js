@@ -18,9 +18,7 @@ function FileInput({ name, value, initialPreview, onChange }) {
     inputNode.value = "";
     onChange(name, null);
   };
-  const handleButtonClick = () => {
-    inputRef.current.click(); // 버튼 클릭 시 input 엘리먼트 클릭
-  };
+
   useEffect(() => {
     if (!value) return;
     const nextPreview = URL.createObjectURL(value);
@@ -34,7 +32,7 @@ function FileInput({ name, value, initialPreview, onChange }) {
 
   return (
     <Container>
-      <InputWrapper onClick={handleButtonClick}>
+      <InputWrapper>
         <ImageRegister
           type="file"
           accept="image/png, image/jpeg"
