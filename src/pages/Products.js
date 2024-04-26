@@ -31,10 +31,20 @@ function Products() {
         );
         const data = response.data;
         if (data && data.list) {
-          setProducts(data.list.slice(0, 10));
-          setBestProducts(data.list.slice(0, 4));
-          const sorted = data.list.sort((a, b) => b[order] - a[order]);
-          setProducts(sorted);
+          const sortedData = data.list.sort(
+            (a, b) => b.favoriteCount - a.favoriteCount
+          );
+          setBestProducts(sortedData.slice(0, 4));
+
+          const sortedProducts = data.list.slice().sort((a, b) => {
+            if (order === "recent") {
+              return new Date(b.createdAt) - new Date(a.createdAt);
+            } else if (order === "favorite") {
+              return b.favoriteCount - a.favoriteCount;
+            }
+            return 0;
+          });
+          setProducts(sortedProducts);
         } else {
           alert("에러가 발생했습니다.");
         }
