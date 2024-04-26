@@ -15,6 +15,7 @@ function Header() {
             <UsedMarket>중고마켓</UsedMarket>
           </StyledLink>
         </nav>
+
       </MenuContainer>
       <Login>로그인</Login>
     </HeaderContainer>
@@ -56,6 +57,7 @@ const FreeBoard = styled.a`
 const StyledLink = styled(Link)`
   text-decoration: none;
 `;
+
 const UsedMarket = styled.a`
   font-family: "Pretendard";
   font-style: normal;
