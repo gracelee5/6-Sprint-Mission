@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import noneComments from "../images/noneComments.svg";
-import logo from "../images/logo.svg";
 import dots from "../images/3dots.svg";
 
 function CommentList() {
