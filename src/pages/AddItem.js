@@ -171,12 +171,12 @@ const ProductName = styled.input`
   }
 `;
 
-const ProductInfo = styled.input`
+const ProductInfo = styled.textarea`
   width: 100%;
   height: 200px;
   background: #f3f4f6;
   border-radius: 12px;
-  padding: 0px 25px;
+  padding: 20px 25px;
   position: relative;
   border: none;
   &::placeholder {
@@ -184,9 +184,6 @@ const ProductInfo = styled.input`
     font-size: 16px;
     line-height: 24px;
     color: #9ca3af;
-    position: absolute;
-    top: 25px;
-    left: 25px;
   }
 `;
 const Price = styled.input`
