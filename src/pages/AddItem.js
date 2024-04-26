@@ -3,6 +3,8 @@ import styled from "styled-components";
 import Header from "../components/Header";
 import FileInput from "../components/FileInput";
 import { createGlobalStyle } from "styled-components";
+import TagInput from "../components/TagInput";
+
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -21,6 +23,8 @@ function AddItem() {
     price: "",
     tag: "",
   });
+  const [tags, setTags] = useState([]);
+  const [isTagsEmpty, setIsTagsEmpty] = useState(true);
 
   const [isValid, setIsValid] = useState(false);
 
@@ -95,13 +99,13 @@ function AddItem() {
           placeholder="판매 가격을 입력해주세요."
         ></Price>
         <Text>태그</Text>
-        <Tag
-          type="text"
-          name="tag"
-          value={values.tag}
-          onChange={handleInputChange}
+        <TagInput
+          name="tags"
+          tags={tags}
+          setTags={setTags}
+          setIsTagsEmpty={setIsTagsEmpty}
           placeholder="태그를 입력해주세요."
-        ></Tag>
+        />
       </Section>
     </>
   );
