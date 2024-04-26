@@ -66,6 +66,13 @@ function ProductsDetail() {
                 <DescriptionTitle>상품 소개</DescriptionTitle>
                 <Description>{product.description}</Description>
                 <DescriptionTitle>상품 태그</DescriptionTitle>
+                <TagList>
+                  {product.tags.map((tag) => (
+                    <TagItem key={`tag - ${tag}`}>
+                      <TagText>#{tag}</TagText>
+                    </TagItem>
+                  ))}
+                </TagList>
                 <ProductLikes>
                   <Heart src={heart}></Heart>
                   {product.favoriteCount}
@@ -134,7 +141,7 @@ const Description = styled.p`
   font-size: 16px;
   line-height: 140%;
   color: #1f2937;
-  margin: 10px 0;
+  margin: 10px 0 30px;
 `;
 const ProductLikes = styled.div`
   font-weight: 500;
@@ -187,4 +194,26 @@ const BackButton = styled.div`
 `;
 const StyledLink = styled(Link)`
   text-decoration: none;
+`;
+const TagList = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 140px;
+  gap: 10px;
+`;
+const TagItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 6px 16px;
+  gap: 10px;
+  background: #f3f4f6;
+  border-radius: 26px;
+`;
+const TagText = styled.p`
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: #1f2937;
 `;
