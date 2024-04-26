@@ -24,7 +24,6 @@ function AddItem() {
     tag: "",
   });
   const [tags, setTags] = useState([]);
-  const [isTagsEmpty, setIsTagsEmpty] = useState(true);
 
   const [isValid, setIsValid] = useState(false);
 
@@ -103,7 +102,6 @@ function AddItem() {
           name="tags"
           tags={tags}
           setTags={setTags}
-          setIsTagsEmpty={setIsTagsEmpty}
           placeholder="태그를 입력해주세요."
         />
       </Section>
@@ -191,21 +189,6 @@ const ProductInfo = styled.textarea`
   }
 `;
 const Price = styled.input`
-  width: 100%;
-  height: 56px;
-  background: #f3f4f6;
-  border-radius: 12px;
-  padding: 0px 25px;
-  border: none;
-  &::placeholder {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
-    color: #9ca3af;
-  }
-`;
-
-const Tag = styled.input`
   width: 100%;
   height: 56px;
   background: #f3f4f6;
