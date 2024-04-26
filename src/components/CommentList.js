@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
 import noneComments from "../images/noneComments.svg";
+import logo from "../images/logo.svg";
+import dots from "../images/3dots.svg";
+
 function CommentList() {
   const [comments, setComments] = useState(null);
   const { productId } = useParams();
@@ -42,7 +45,10 @@ function CommentList() {
           <CommentListContainer>
             {comments.map((comment, id) => (
               <div key={id}>
-                <Content>{comment.content}</Content>
+                <div style={{ display: "flex", width: "100%" }}>
+                  <Content>{comment.content}</Content>
+                  <Dots src={dots} />
+                </div>
                 <ProfileContainer>
                   <ProfileImage src={comment.image} alt="작성자 이미지" />
                   <NickNameContainer>
@@ -67,6 +73,12 @@ const NoneCommentsContainer = styled.div`
   align-items: center;
   width: 1200px;
   margin: 0 auto;
+  @media (max-width: 1199px) {
+    width: 696px;
+  }
+  @media (max-width: 767px) {
+    width: 344px;
+  }
 `;
 const NoneCommentsText = styled.p`
   font-family: "Pretendard";
@@ -80,9 +92,15 @@ const NoneCommentsText = styled.p`
 const CommentListContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   width: 1200px;
   margin: 0 auto;
+  @media (max-width: 1199px) {
+    width: 696px;
+  }
+  @media (max-width: 767px) {
+    width: 344px;
+  }
 `;
 const Content = styled.p`
   font-family: "Pretendard";
@@ -91,6 +109,7 @@ const Content = styled.p`
   font-size: 16px;
   line-height: 140%;
   color: #1f2937;
+  margin: 20px 0;
 `;
 const ProfileContainer = styled.div`
   display: flex;
@@ -98,10 +117,12 @@ const ProfileContainer = styled.div`
 const ProfileImage = styled.img`
   width: 40px;
   height: 40px;
+  margin-right: 20px;
 `;
 const NickNameContainer = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 5px;
 `;
 const NickName = styled.p`
   font-family: "Pretendard";
@@ -124,4 +145,7 @@ const Divider = styled.div`
   height: 1px;
   background-color: #e5e7eb;
   margin: 16px 0;
+`;
+const Dots = styled.img`
+  margin: 0 10px 0 auto;
 `;

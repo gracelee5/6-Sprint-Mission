@@ -102,26 +102,48 @@ const Container = styled.div`
   position: relative;
   width: 1200px;
   margin: 20px auto;
+  @media (max-width: 1199px) {
+    width: 696px;
+  }
+  @media (max-width: 767px) {
+    width: 344px;
+  }
 `;
 const ProductContainer = styled.div`
   display: flex;
   gap: 24px;
+  @media (max-width: 767px) {
+    flex-direction: column;
+  }
 `;
 const ProductInfo = styled.div`
   display: flex;
   flex-direction: column;
   width: 690px;
+  @media (max-width: 767px) {
+    width: 344px;
+  }
 `;
 const ProductImage = styled.img`
   width: 486px;
   height: 486px;
   border-radius: 16px;
+  @media (max-width: 1199px) {
+    width: 340px;
+    height: 340px;
+  }
 `;
 const ProductName = styled.p`
   font-weight: 600;
   font-size: 24px;
   line-height: 29px;
   color: #1f2937;
+  @media (max-width: 1199px) {
+    font-size: 20px;
+  }
+  @media (max-width: 767px) {
+    font-size: 16px;
+  }
 `;
 const ProductPrice = styled.p`
   font-weight: 600;
@@ -129,6 +151,12 @@ const ProductPrice = styled.p`
   line-height: 48px;
   color: #1f2937;
   margin: 24px 0;
+  @media (max-width: 1199px) {
+    font-size: 32px;
+  }
+  @media (max-width: 767px) {
+    font-size: 24px;
+  }
 `;
 const DescriptionTitle = styled.p`
   font-weight: 500;
@@ -162,6 +190,12 @@ const ProductLikes = styled.div`
 const Dots = styled.img`
   position: absolute;
   margin: 0 0 0 680px;
+  @media (max-width: 1199px) {
+    margin: 0 0 0 330px;
+  }
+  @media (max-width: 767px) {
+    margin: 0 0 0 330px;
+  }
 `;
 
 const Heart = styled.img`
@@ -199,7 +233,7 @@ const TagList = styled.div`
   display: flex;
   flex-wrap: wrap;
   margin-top: 10px;
-  margin-bottom: 140px;
+  margin-bottom: 10px;
   gap: 10px;
 `;
 const TagItem = styled.div`
