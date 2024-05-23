@@ -5,8 +5,16 @@ import axios from "axios";
 import noneComments from "../images/noneComments.svg";
 import dots from "../images/3dots.svg";
 
+interface Comment {
+  id: number;
+  content: string;
+  image: string;
+  nickname: string;
+  updatedAt: string;
+}
+
 function CommentList() {
-  const [comments, setComments] = useState(null);
+  const [comments, setComments] = useState<Comment[]>([]);
   const { productId } = useParams();
 
   const getComments = async (productId) => {

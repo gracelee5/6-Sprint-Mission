@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useCallback } from "react";
-import styled from "styled-components";
+import React, { useState, useEffect, useCallback, ChangeEvent } from "react";
+import styled, { createGlobalStyle } from "styled-components";
 import Header from "../components/Header";
 import FileInput from "../components/FileInput";
-import { createGlobalStyle } from "styled-components";
 import TagInput from "../components/TagInput";
 
+// 글로벌 스타일 정의
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -15,47 +15,66 @@ const GlobalStyle = createGlobalStyle`
     font-style: normal;
   }
 `;
-function AddItem() {
-  const [values, setValues] = useState({
+
+// AddItem 컴포넌트
+function AddItem(): JSX.Element {
+  // 상태 타입 정의
+  interface Values {
+    title: string;
+    content: string;
+    imgFile: File | null;
+    price: string;
+    tag: string;
+  }
+
+  const [values, setValues] = useState<Values>({
     title: "",
     content: "",
     imgFile: null,
     price: "",
     tag: "",
   });
-  const [tags, setTags] = useState([]);
 
+  const [tags, setTags] = useState<string[]>([]);
   const [isValid, setIsValid] = useState(false);
 
-  const handleChange = (name, value) => {
+  // handleChange 함수의 타입 정의
+  const handleChange = (name: string, value: string | File | null) => {
     setValues((prevValues) => ({
       ...prevValues,
       [name]: value,
     }));
   };
 
-  const handleInputChange = (e) => {
+  // handleInputChange 함수의 타입 정의
+  const handleInputChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     handleChange(name, value);
   };
 
+  // 입력 값 검증 함수
   const validateInputs = useCallback(() => {
     const isValid =
       values.title.trim() !== "" &&
       values.content.trim() !== "" &&
       values.price.trim() !== "" &&
-      values.tag.trim() !== "";
+      tags.length > 0;
 
     setIsValid(isValid);
-  }, [values]);
+  }, [values, tags]);
 
+  // 입력 값 검증 함수 호출
   useEffect(() => {
     validateInputs();
   }, [values, validateInputs]);
 
+  // 제출 함수
   const handleSubmit = () => {
     console.log("submit");
   };
+
   return (
     <>
       <GlobalStyle />
@@ -80,15 +99,14 @@ function AddItem() {
           value={values.title}
           onChange={handleInputChange}
           placeholder="상품명을 입력해주세요."
-        ></ProductName>
+        />
         <Text>상품 소개</Text>
         <ProductInfo
-          type="text"
           name="content"
           value={values.content}
           onChange={handleInputChange}
           placeholder="상품 소개를 입력해주세요."
-        ></ProductInfo>
+        />
         <Text>판매 가격</Text>
         <Price
           type="number"
@@ -96,10 +114,9 @@ function AddItem() {
           value={values.price}
           onChange={handleInputChange}
           placeholder="판매 가격을 입력해주세요."
-        ></Price>
+        />
         <Text>태그</Text>
         <TagInput
-          name="tags"
           tags={tags}
           setTags={setTags}
           placeholder="태그를 입력해주세요."
@@ -108,6 +125,7 @@ function AddItem() {
     </>
   );
 }
+
 export default AddItem;
 
 const Section = styled.div`

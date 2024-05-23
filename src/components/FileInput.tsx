@@ -1,10 +1,17 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import X from "../images/ic_X.svg";
 import plus from "../images/ic_plus.svg";
-function FileInput({ name, value, initialPreview, onChange }) {
+
+interface FileInputProps {
+  name: string;
+  value: File | null;
+  initialPreview?: string;
+  onChange: (name: string, nextName: string | null) => void;
+}
+function FileInput({ name, value, initialPreview, onChange }: FileInputProps) {
   const [preview, setPreview] = useState(initialPreview);
-  const inputRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleChange = (e) => {
     const nextValue = e.target.files[0];
@@ -43,8 +50,10 @@ function FileInput({ name, value, initialPreview, onChange }) {
         <InputText>이미지 등록</InputText>
       </InputWrapper>
       <Container1>
-        {value && <Image src={preview} alt="이미지 등록"></Image>}
-        {value && <Delete onClick={handleClearClick} src={X}></Delete>}
+        <>
+          {value && <Image src={preview} alt="이미지 등록"></Image>}
+          {value && <Delete onClick={handleClearClick} src={X}></Delete>}
+        </>
       </Container1>
     </Container>
   );

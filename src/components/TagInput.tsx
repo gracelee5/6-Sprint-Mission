@@ -2,19 +2,32 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import DeleteIcon from "../images/ic_X_gray.svg";
 
-const InputTag = ({ tags, setTags, setIsTagsEmpty }) => {
+interface TagInputProps {
+  tags: string[];
+  setTags: React.Dispatch<React.SetStateAction<string[]>>;
+  setIsTagsEmpty?: React.Dispatch<React.SetStateAction<boolean>> | undefined;
+  placeholder?: string;
+}
+const TagInput = ({
+  tags,
+  setTags,
+  setIsTagsEmpty,
+  placeholder,
+}: TagInputProps) => {
   const [inputValue, setInputValue] = useState("");
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
   };
 
-  const handleInputKeyDown = (e) => {
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && inputValue.trim() !== "") {
       setTags([...tags, inputValue.trim()]);
       e.preventDefault();
       setInputValue("");
-      setIsTagsEmpty(false);
+      if (setIsTagsEmpty) {
+        setIsTagsEmpty(false);
+      }
     }
   };
 
@@ -22,12 +35,14 @@ const InputTag = ({ tags, setTags, setIsTagsEmpty }) => {
     const newTags = [...tags];
     newTags.splice(index, 1);
     setTags(newTags);
-    setIsTagsEmpty(newTags.length === 0);
+    if (setIsTagsEmpty) {
+      setIsTagsEmpty(newTags.length === 0);
+    }
   };
 
   return (
     <InputTagContainer>
-      <TagInput
+      <InputTag
         type="tag"
         value={inputValue}
         onChange={handleInputChange}
@@ -54,7 +69,7 @@ const InputTagContainer = styled.div`
   align-items: flex-start;
 `;
 
-const TagInput = styled.input`
+const InputTag = styled.input`
   width: 100%;
   height: 56px;
   background: #f3f4f6;
@@ -111,4 +126,4 @@ const CloseIcon = styled.img`
   width: 20px;
   height: 20px;
 `;
-export default InputTag;
+export default TagInput;

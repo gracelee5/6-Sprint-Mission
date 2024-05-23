@@ -10,7 +10,15 @@ import { createGlobalStyle } from "styled-components";
 import CommentInput from "../components/CommentInput";
 import CommentList from "../components/CommentList.js";
 import { Link } from "react-router-dom";
-
+interface Product {
+  id: number;
+  name: string;
+  images: string;
+  price: number;
+  description: string;
+  tags: string[];
+  favoriteCount: number;
+}
 const GlobalStyle = createGlobalStyle`
   * {
     box-sizing: border-box;
@@ -24,7 +32,7 @@ const GlobalStyle = createGlobalStyle`
 
 function ProductsDetail() {
   const { productId } = useParams();
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState<Product | null>(null);
 
   const getProductById = async (productId) => {
     try {

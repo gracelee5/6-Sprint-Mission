@@ -1,9 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, ChangeEvent } from "react";
 import styled from "styled-components";
-function CommentInput() {
-  const [comment, setComment] = useState("");
 
-  const handleInputChange = (event) => {
+interface RegisterButtonProps {
+  isEnabled: boolean;
+}
+
+function CommentInput(): JSX.Element {
+  const [comment, setComment] = useState<string>("");
+
+  const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>): void => {
     setComment(event.target.value);
   };
 
@@ -65,7 +70,7 @@ const InputArea = styled.textarea`
     }
   }
 `;
-const RegisterButton = styled.button`
+const RegisterButton = styled.button<RegisterButtonProps>`
   display: flex;
   flex-direction: row;
   justify-content: center;

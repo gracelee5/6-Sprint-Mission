@@ -8,9 +8,21 @@ import search from "../images/search.svg";
 import arrowDown from "../images/arrow_down.svg";
 import Header from "../components/Header";
 
+interface Product {
+  id: number;
+  name: string;
+  images: string;
+  price: number;
+  favoriteCount: number;
+  createdAt: string;
+}
+interface OptionsContainerProps {
+  isOpen: boolean;
+}
+
 function Products() {
-  const [products, setProducts] = useState([]);
-  const [bestProducts, setBestProducts] = useState([]);
+  const [products, setProducts] = useState<Product[]>([]);
+  const [bestProducts, setBestProducts] = useState<Product[]>([]);
   const [order, setOrder] = useState("recent");
   const [isOpen, setIsOpen] = useState(false);
   const page = 1;
@@ -29,7 +41,7 @@ function Products() {
             },
           }
         );
-        const data = response.data;
+        const data = response.data as { list: Product[] };
         if (data && data.list) {
           const sortedData = data.list.sort(
             (a, b) => b.favoriteCount - a.favoriteCount
@@ -38,7 +50,10 @@ function Products() {
 
           const sortedProducts = data.list.slice().sort((a, b) => {
             if (order === "recent") {
-              return new Date(b.createdAt) - new Date(a.createdAt);
+              return (
+                new Date(b.createdAt).getTime() -
+                new Date(a.createdAt).getTime()
+              );
             } else if (order === "favorite") {
               return b.favoriteCount - a.favoriteCount;
             }
@@ -55,12 +70,12 @@ function Products() {
     fetchProducts();
   }, [order]);
 
-  const handleOrderChange = (selectedOrder) => {
+  const handleOrderChange = (selectedOrder: string) => {
     setOrder(selectedOrder);
     setIsOpen(false); // Close dropdown after selecting an option
   };
 
-  const handleProductClick = (productId) => {
+  const handleProductClick = (productId: number) => {
     navigate(`/items/${productId}`);
   };
 
@@ -272,7 +287,7 @@ const SelectButton = styled.div`
   color: #1f2937;
 `;
 
-const OptionsContainer = styled.div`
+const OptionsContainer = styled.div<OptionsContainerProps>`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   position: absolute;
   z-index: 1;
