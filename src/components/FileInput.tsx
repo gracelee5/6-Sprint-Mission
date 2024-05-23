@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, ChangeEvent } from "react";
 import styled from "styled-components";
 import X from "../images/ic_X.svg";
 import plus from "../images/ic_plus.svg";
@@ -7,14 +7,19 @@ interface FileInputProps {
   name: string;
   value: File | null;
   initialPreview?: string;
-  onChange: (name: string, nextName: string | null) => void;
+  onChange: (name: string, nextName: File | null) => void;
 }
 function FileInput({ name, value, initialPreview, onChange }: FileInputProps) {
   const [preview, setPreview] = useState(initialPreview);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleChange = (e) => {
-    const nextValue = e.target.files[0];
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) {
+      // 파일이 없거나 파일 배열의 길이가 0인 경우
+      return;
+    }
+    const nextValue = files[0]; // 첫 번째 파일만을 선택
     onChange(name, nextValue);
   };
 

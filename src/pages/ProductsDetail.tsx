@@ -8,8 +8,9 @@ import dots from "../images/3dots.svg";
 import turnback from "../images/turnback.svg";
 import { createGlobalStyle } from "styled-components";
 import CommentInput from "../components/CommentInput";
-import CommentList from "../components/CommentList.js";
+import CommentList from "../components/CommentList";
 import { Link } from "react-router-dom";
+
 interface Product {
   id: number;
   name: string;
@@ -31,10 +32,11 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function ProductsDetail() {
-  const { productId } = useParams();
+  const { productId } = useParams<{ productId: string }>();
+  const numericProductId = parseInt(productId || "", 10);
   const [product, setProduct] = useState<Product | null>(null);
 
-  const getProductById = async (productId) => {
+  const getProductById = async (productId: number) => {
     try {
       const response = await axios.get(
         `https://panda-market-api.vercel.app/products/${productId}`
@@ -47,15 +49,21 @@ function ProductsDetail() {
 
   useEffect(() => {
     const fetchProduct = async () => {
+      if (!numericProductId || isNaN(numericProductId)) {
+        console.error("상품 ID가 유효하지 않습니다.");
+        return;
+      }
+
       try {
-        const data = await getProductById(productId);
+        const data = await getProductById(numericProductId);
         setProduct(data);
       } catch (error) {
         console.error("상품 정보를 불러오는 데 실패했습니다:", error);
       }
     };
+
     fetchProduct();
-  }, [productId]);
+  }, [numericProductId]);
 
   return (
     <>

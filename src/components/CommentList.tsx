@@ -15,9 +15,10 @@ interface Comment {
 
 function CommentList() {
   const [comments, setComments] = useState<Comment[]>([]);
-  const { productId } = useParams();
+  const { productId } = useParams<{ productId: string }>();
+  const numericProductId = parseInt(productId || "", 10);
 
-  const getComments = async (productId) => {
+  const getComments = async (productId: number) => {
     try {
       const response = await axios.get(
         `https://panda-market-api.vercel.app/products/${productId}/comments`
@@ -29,17 +30,24 @@ function CommentList() {
   };
 
   useEffect(() => {
+    if (!numericProductId || isNaN(numericProductId)) {
+      console.error("상품 ID가 유효하지 않습니다.");
+      return;
+    }
+
     const fetchComments = async () => {
       try {
-        const data = await getComments(productId);
+        const data = await getComments(numericProductId);
         setComments(data.list);
         console.log(data);
       } catch (error) {
         console.error("댓글을 불러오는 데 실패했습니다:", error);
       }
     };
+
     fetchComments();
-  }, [productId]);
+  }, [numericProductId]);
+
   return (
     <>
       {!comments || comments.length === 0 ? (

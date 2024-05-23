@@ -31,7 +31,7 @@ const TagInput = ({
     }
   };
 
-  const handleTagDelete = (index) => {
+  const handleTagDelete = (index: any) => {
     const newTags = [...tags];
     newTags.splice(index, 1);
     setTags(newTags);
