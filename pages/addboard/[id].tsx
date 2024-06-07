@@ -10,13 +10,20 @@ import CommentInput from "../../components/CommentInput";
 import CommentList from "../../components/CommentList";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import profile from "../../images/ic_profile.png";
+import Image from "next/image";
 
-interface Product {
-  id: number;
-  name: string;
-  images: string;
-  description: string;
-  favoriteCount: number;
+interface Board {
+  title: string;
+  nickname: string;
+  image: string;
+  content: string;
+  likeCount: number;
+  writer: {
+    id: number;
+    nickname: string;
+  };
+  createdAt: string;
 }
 const GlobalStyle = createGlobalStyle`
   * {
@@ -31,42 +38,42 @@ const GlobalStyle = createGlobalStyle`
 
 function BoardDetail() {
   const router = useRouter();
-  const { articleId } = router.query;
-  const numericArticleId = Array.isArray(articleId)
-    ? parseInt(articleId[0], 10)
-    : parseInt(articleId || "", 10);
+  const { id } = router.query;
+  const numericId = Array.isArray(id)
+    ? parseInt(id[0], 10)
+    : parseInt(id || "", 10);
 
-  const [product, setProduct] = useState<Product | null>(null);
+  const [board, setBoard] = useState<Board | null>(null);
 
-  const getProductById = async (articleId: number) => {
+  const getBoardById = async (id: number) => {
     try {
       const response = await axios.get(
-        `https://panda-market-api.vercel.app/articles/${articleId}`
+        `https://panda-market-api.vercel.app/articles/${id}`
       );
-      console.log("api 호출 성공");
       return response.data;
     } catch (error) {
       console.error(error);
     }
   };
+  console.log("id", id);
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      if (!numericArticleId || isNaN(numericArticleId)) {
-        console.error("상품 ID가 유효하지 않습니다.");
+    const fetchBoard = async () => {
+      if (!numericId || isNaN(numericId)) {
+        console.error("ID가 유효하지 않습니다.");
         return;
       }
 
       try {
-        const data = await getProductById(numericArticleId);
-        setProduct(data);
+        const data = await getBoardById(numericId);
+        setBoard(data);
       } catch (error) {
         console.error("상품 정보를 불러오는 데 실패했습니다:", error);
       }
     };
 
-    fetchProduct();
-  }, [numericArticleId]);
+    fetchBoard();
+  }, [numericId]);
 
   return (
     <>
@@ -74,20 +81,29 @@ function BoardDetail() {
       <Header />
       <Container>
         <ProductContainer>
-          {product ? (
+          {board ? (
             <>
-              <ProductImage src={product.images} alt={product.name} />
-              <ProductInfo>
-                <ProductName>{product.name}</ProductName>
-                <Dots />
-                <Divider />
-                <DescriptionTitle>상품 소개</DescriptionTitle>
-                <Description>{product.description}</Description>
-
+              <div style={{ display: "flex" }}>
+                <Title>{board.title}</Title>
+                <DotsContainer>
+                  <Dots />
+                </DotsContainer>
+              </div>
+              <ProfileContainer>
+                <Image src={profile} alt="프로필" />
+                <Name>{board.writer.nickname}</Name>
+                <CreatedAt>{board.createdAt}</CreatedAt>
+                <CreatedAt>|</CreatedAt>
                 <ProductLikes>
-                  <Heart></Heart>
-                  {product.favoriteCount}
+                  <Heart />
+                  {board.likeCount}
                 </ProductLikes>
+              </ProfileContainer>
+
+              <Divider />
+              <ProductImage src={board.image} alt={board.nickname} />
+              <ProductInfo>
+                <Description>{board.content}</Description>
               </ProductInfo>
             </>
           ) : (
@@ -122,6 +138,7 @@ const Container = styled.div`
 `;
 const ProductContainer = styled.div`
   display: flex;
+  flex-direction: column;
   gap: 24px;
   @media (max-width: 767px) {
     flex-direction: column;
@@ -135,6 +152,19 @@ const ProductInfo = styled.div`
     width: 344px;
   }
 `;
+const Title = styled.p`
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  display: flex;
+  align-items: center;
+  color: #1f2937;
+`;
+const ProfileContainer = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`;
 const ProductImage = styled.img`
   width: 486px;
   height: 486px;
@@ -144,11 +174,14 @@ const ProductImage = styled.img`
     height: 340px;
   }
 `;
-const ProductName = styled.p`
-  font-weight: 600;
-  font-size: 24px;
-  line-height: 29px;
-  color: #1f2937;
+const Name = styled.p`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: #4b5563;
+
   @media (max-width: 1199px) {
     font-size: 20px;
   }
@@ -156,49 +189,30 @@ const ProductName = styled.p`
     font-size: 16px;
   }
 `;
-const ProductPrice = styled.p`
-  font-weight: 600;
-  font-size: 40px;
-  line-height: 48px;
-  color: #1f2937;
-  margin: 24px 0;
-  @media (max-width: 1199px) {
-    font-size: 32px;
-  }
-  @media (max-width: 767px) {
-    font-size: 24px;
-  }
-`;
-const DescriptionTitle = styled.p`
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 17px;
-  color: #4b5563;
+const CreatedAt = styled.p`
+  font-family: "Pretendard";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  color: #9ca3af;
 `;
 const Description = styled.p`
   font-weight: 400;
   font-size: 16px;
   line-height: 140%;
   color: #1f2937;
-  margin: 10px 0 30px;
 `;
 const ProductLikes = styled.div`
-  font-weight: 500;
-  font-size: 16px;
-  line-height: 19px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
   color: #4b5563;
   display: flex;
-  align-items: center;
-  padding: 4px 12px;
   gap: 10px;
-  width: 87px;
-  height: 40px;
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  border-radius: 35px;
-  margin: auto 0 0 0;
+  align-items: center;
 `;
-const Dots1 = styled.img`
+const DotsContainer = styled.img`
   position: absolute;
   margin: 0 0 0 680px;
   @media (max-width: 1199px) {
@@ -220,6 +234,7 @@ const Divider = styled.div`
   background-color: #e5e7eb;
   margin-bottom: 16px;
 `;
+
 const BackButton = styled.div`
   display: flex;
   flex-direction: row;

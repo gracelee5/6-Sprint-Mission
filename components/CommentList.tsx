@@ -16,15 +16,15 @@ interface Comment {
 function CommentList() {
   const [comments, setComments] = useState<Comment[]>([]);
   const router = useRouter();
-  const { articleId } = router.query;
-  const numericArticleId = Array.isArray(articleId)
-    ? parseInt(articleId[0], 10)
-    : parseInt(articleId || "", 10);
+  const { id } = router.query;
+  const numericId = Array.isArray(id)
+    ? parseInt(id[0], 10)
+    : parseInt(id || "", 10);
 
-  const getComments = async (articleId: number) => {
+  const getComments = async (id: number) => {
     try {
       const response = await axios.get(
-        `https://panda-market-api.vercel.app/articles/${articleId}/comments/limit=10`
+        `https://panda-market-api.vercel.app/articles/${id}/comments/limit=10`
       );
       return response.data;
     } catch (error) {
@@ -33,14 +33,14 @@ function CommentList() {
   };
 
   useEffect(() => {
-    if (!numericArticleId || isNaN(numericArticleId)) {
+    if (!numericId || isNaN(numericId)) {
       console.error("ID가 유효하지 않습니다.");
       return;
     }
 
     const fetchComments = async () => {
       try {
-        const data = await getComments(numericArticleId);
+        const data = await getComments(numericId);
         setComments(data.list);
         console.log(data);
       } catch (error) {
@@ -49,7 +49,7 @@ function CommentList() {
     };
 
     fetchComments();
-  }, [numericArticleId]);
+  }, [numericId]);
 
   return (
     <>
