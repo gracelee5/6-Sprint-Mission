@@ -15,8 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-// AddItem 컴포넌트
-function AddItem(): JSX.Element {
+function AddBoard(): JSX.Element {
   // 상태 타입 정의
   interface Values {
     title: string;
@@ -103,7 +102,7 @@ function AddItem(): JSX.Element {
   );
 }
 
-export default AddItem;
+export default AddBoard;
 
 const Section = styled.div`
   width: 1200px;
